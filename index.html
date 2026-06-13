@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starshard Brigands - Official Site</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Shippori+Mincho:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- BASE STYLES --- */
+        :root {
+            --bg-color: #050505;
+            --text-main: #e0e0e0;
+            --gold-primary: #c5a059;
+            --gold-shine: #ffeebb;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Shippori Mincho', serif;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cinzel', serif;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        img { display: block; max-width: 100%; height: auto; }
+        a { text-decoration: none; transition: 0.3s; color: inherit; }
+
+        /* --- TOP LINKS --- */
+        .top-links {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 15px;
+        }
+        .top-btn {
+            display: inline-block;
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-primary);
+            padding: 5px 15px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            background: rgba(0,0,0,0.5);
+        }
+        .top-btn:hover {
+            background: var(--gold-primary);
+            color: #000;
+        }
+
+        /* --- AUDIO PLAYER --- */
+        .audio-player {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+        }
+        .audio-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--gold-primary);
+            border-radius: 50%;
+            background: rgba(0,0,0,0.8);
+            color: var(--gold-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1.2rem;
+        }
+        .audio-btn:hover {
+            background: var(--gold-primary);
+            color: #000;
+            box-shadow: 0 0 15px var(--gold-primary);
+        }
+        .audio-btn.playing {
+            animation: pulse-gold 2s infinite;
+        }
+        .audio-label {
+            margin-left: 10px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            color: #666;
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .audio-player:hover .audio-label {
+            opacity: 1;
+        }
+
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(197, 160, 89, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(197, 160, 89, 0); }
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .hero-bg-img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.5); 
+        }
+
+        .logo-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+            z-index: 2;
+            filter: drop-shadow(0 0 20px rgba(197, 160, 89, 0.3)); 
+        }
+
+        .logo-full {
+            width: 100%;
+            max-width: 700px;
+            height: auto;
+            animation: float 6s ease-in-out infinite; 
+        }
+
+        .hero-copy {
+            text-align: center;
+            z-index: 2;
+            margin-bottom: 30px;
+        }
+
+        @keyframes textGlitch {
+            0%, 95%, 100% { text-shadow: 0 2px 10px rgba(0,0,0,0.8); transform: skewX(0); }
+            96% { text-shadow: 2px 0 0 rgba(200, 0, 0, 0.8), -2px 0 0 rgba(0, 200, 200, 0.8); transform: skewX(5deg); }
+            97% { text-shadow: -2px 0 0 rgba(200, 0, 0, 0.8), 2px 0 0 rgba(0, 200, 200, 0.8); transform: skewX(-5deg); }
+            98% { text-shadow: 0 2px 10px rgba(0,0,0,0.8); transform: skewX(0); }
+        }
+        .hero-copy h2 {
+            font-size: 1.5rem;
+            color: var(--gold-shine);
+            margin-bottom: 5px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            animation: textGlitch 6s infinite;
+        }
+
+        /* --- VIDEO THUMBNAIL --- */
+        .video-card-trigger {
+            position: relative;
+            width: 280px;
+            aspect-ratio: 816 / 624;
+            height: auto;
+            flex-shrink: 0;
+            border: 2px solid var(--gold-primary);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            cursor: pointer;
+            overflow: hidden;
+            z-index: 10;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .video-card-trigger:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(197, 160, 89, 0.6);
+        }
+        .video-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.3s;
+            filter: brightness(0.8);
+        }
+        .video-card-trigger:hover .video-card-img {
+            filter: brightness(1.1);
+            transform: scale(1.1);
+        }
+        .play-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0,0,0,0.3);
+        }
+        .play-icon-small {
+            width: 0; height: 0; 
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-left: 25px solid #fff;
+            margin-left: 5px;
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+        }
+        .play-label {
+            color: #fff;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            letter-spacing: 0.1em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        /* --- STEAM BUTTON --- */
+        .hero-actions {
+            display: flex; flex-direction: column; gap: 15px; align-items: center; justify-content: center;
+            z-index: 10; margin-top: 15px;
+        }
+        .custom-steam-btn {
+            display: flex; align-items: center; justify-content: center;
+            background-color: #1a1c20;
+            border: 2px solid var(--gold-primary);
+            width: 280px; box-sizing: border-box;
+            padding: 12px 10px; text-decoration: none; color: #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.8); transition: 0.3s;
+            border-radius: 4px;
+            animation: pulse-gold 3s infinite;
+        }
+        .custom-steam-btn:hover {
+            transform: scale(1.03); border-color: var(--gold-shine);
+            box-shadow: 0 0 20px rgba(197, 160, 89, 0.6); background-color: #2a2c33;
+            animation: none;
+        }
+        .steam-logo-img { width: 32px; height: auto; margin-right: 12px; }
+        .steam-btn-text { display: flex; flex-direction: column; text-align: left; }
+        .steam-btn-sub { font-size: 0.75rem; color: #aaa; font-family: sans-serif; letter-spacing: 0.05em; line-height: 1.2; }
+        .steam-btn-main { font-size: 1.1rem; font-weight: bold; font-family: 'Cinzel', serif; letter-spacing: 0.05em; color: var(--gold-shine); line-height: 1.2; margin-top: 2px; }
+
+        /* --- MODAL WINDOW --- */
+        .video-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.95);
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .video-modal.active { display: flex; opacity: 1; }
+        .video-wrapper {
+            width: 90%; max-width: 1000px; aspect-ratio: 816 / 624;
+            position: relative;
+            box-shadow: 0 0 50px rgba(197, 160, 89, 0.2);
+            border: 1px solid #333; background: #000;
+        }
+        .video-wrapper video { width: 100%; height: 100%; outline: none; }
+        .close-btn {
+            color: #fff; font-size: 40px; font-weight: bold;
+            position: absolute; top: -50px; right: 0;
+            cursor: pointer; transition: 0.3s;
+        }
+        .close-btn:hover { color: var(--gold-primary); }
+
+        /* --- UTILITY --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .fade-in {
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 1.0s ease-out, transform 1.0s ease-out;
+        }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* --- STORY --- */
+        .story {
+            padding: 100px 0; text-align: center;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #050505 70%);
+        }
+        .story p { font-size: 1.1rem; max-width: 700px; margin: 0 auto 30px; }
+        .gold-text { color: var(--gold-primary); font-weight: bold; }
+
+        /* --- SHOWCASE --- */
+        .feature-showcase {
+            display: flex; align-items: center; justify-content: space-between;
+            margin: 100px 0; gap: 40px;
+        }
+        .feature-showcase.row-reverse { flex-direction: row-reverse; }
+        
+        .feature-video {
+            flex: 1; min-height: 250px; background: #000; display: flex;
+            position: relative; overflow: hidden;
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s;
+        }
+        .feature-showcase:hover .feature-video {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(197, 160, 89, 0.3);
+            border-color: rgba(197, 160, 89, 0.5);
+        }
+        .feature-video video { width: 100%; display: block; object-fit: cover; }
+        
+        .feature-text {
+            flex: 1; padding: 40px; background: rgba(25, 25, 30, 0.3);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(197, 160, 89, 0.15);
+            border-left: 3px solid var(--gold-primary);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s, background 0.4s;
+        }
+        .feature-text:hover {
+            transform: translateY(-8px);
+            background: rgba(35, 35, 45, 0.45);
+            box-shadow: 0 25px 50px rgba(197, 160, 89, 0.2), inset 0 0 20px rgba(197, 160, 89, 0.05);
+            border-color: rgba(197, 160, 89, 0.4);
+        }
+        .feature-showcase.row-reverse .feature-text {
+            border-left: 1px solid rgba(197, 160, 89, 0.15);
+            border-right: 3px solid var(--gold-primary);
+        }
+        .feature-showcase.row-reverse .feature-text:hover {
+            border-left-color: rgba(197, 160, 89, 0.4);
+        }
+        
+        .text-gradient-gold {
+            background: linear-gradient(to bottom right, #fff5d1 0%, #c5a059 40%, #7a5c22 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            text-shadow: none !important;
+            font-weight: bold;
+        }
+
+        .gold-title {
+            color: var(--gold-primary); margin-bottom: 15px; font-size: 1.5rem;
+            border-bottom: 1px solid #333; display: inline-block;
+        }
+        
+        .feature-list {
+            list-style: none; padding: 0; margin: 0;
+        }
+        .feature-list li {
+            margin-bottom: 15px; line-height: 1.6; font-size: 0.95rem;
+        }
+        .feature-list strong {
+            color: var(--gold-shine); display: block; margin-bottom: 3px; font-size: 1.05rem;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .feature-showcase, .feature-showcase.row-reverse { flex-direction: column; }
+            .feature-text { border-left: none !important; border-right: none !important; border-top: 3px solid var(--gold-primary); padding: 20px; }
+        }
+
+        /* Animations */
+        .fade-in-left { opacity: 0; transform: translateX(-50px); transition: opacity 1.0s ease-out, transform 1.0s ease-out; }
+        .fade-in-right { opacity: 0; transform: translateX(50px); transition: opacity 1.0s ease-out, transform 1.0s ease-out; }
+        .fade-in-left.visible, .fade-in-right.visible { opacity: 1; transform: translateX(0); }
+
+        /* --- PARALLAX --- */
+        .parallax-section {
+            position: relative; height: 400px; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .parallax-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: -1;
+        }
+        .parallax-overlay {
+            background: rgba(0,0,0,0.7); padding: 40px;
+            border: 1px solid var(--gold-primary); text-align: center; z-index: 1;
+        }
+
+        /* --- ENGINE BADGE --- */
+        .engine-badge {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid rgba(197, 160, 89, 0.3);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+            background: linear-gradient(90deg, transparent, rgba(197, 160, 89, 0.05), transparent);
+        }
+        .engine-badge span {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            color: var(--gold-primary);
+            letter-spacing: 0.15em;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 50px 0; border-top: 1px solid #222;
+            text-align: center; color: #666; font-size: 0.9rem;
+        }
+        
+        .x-link-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            margin-top: 20px; padding: 10px 20px;
+            background: #000; border: 1px solid #333; color: #fff;
+            border-radius: 30px; font-family: sans-serif; font-weight: bold;
+        }
+        .x-link-btn:hover { background: #fff; color: #000; border-color: #fff; }
+        #particleCanvas {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 9999; pointer-events: none;
+        }
+
+        /* --- PREMIUM EFFECTS --- */
+        #vignette {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 9997;
+            box-shadow: inset 0 0 150px rgba(0,0,0,0.95);
+        }
+        #spotlight {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 9998;
+            background: radial-gradient(circle 400px at var(--x, 50vw) var(--y, 50vh), rgba(197, 160, 89, 0.05), transparent 80%);
+        }
+        #progressBar {
+            position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+            background: linear-gradient(90deg, transparent, var(--gold-shine), #fff);
+            z-index: 10000; box-shadow: 0 0 10px var(--gold-primary);
+        }
+        .stagger-section p {
+            opacity: 0; transform: translateY(20px);
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+        }
+        .stagger-section.visible p { opacity: 1; transform: translateY(0); }
+        .stagger-section.visible p:nth-of-type(1) { transition-delay: 0.2s; }
+        .stagger-section.visible p:nth-of-type(2) { transition-delay: 0.8s; }
+        .stagger-section.visible p:nth-of-type(3) { transition-delay: 1.4s; }
+        .stagger-section.visible p:nth-of-type(4) { transition-delay: 2.0s; }
+        .stagger-section.visible p:nth-of-type(5) { transition-delay: 2.6s; }
+
+        /* 追従Steamボタン廃止済み */
+    </style>
+</head>
+<body>
+
+    <!-- Premium Overlays -->
+    <div id="vignette"></div>
+    <div id="spotlight"></div>
+    <div id="progressBar"></div>
+
+    <!-- Floating Steam Button (廃止) -->
+
+    <!-- Particle Canvas -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Top Links -->
+    <div class="top-links">
+        <a href="https://x.com/Zomia_Studio" target="_blank" class="top-btn" style="font-family: sans-serif; font-weight: bold;">𝕏 Follow us</a>
+        <a href="en.html" class="top-btn">ENGLISH &raquo;</a>
+    </div>
+
+    <!-- BGM Player Removed -->
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <!-- ★ここを画像(S__city.png)に戻しました★ -->
+        <img src="S__city.png" alt="Main Visual City" class="hero-bg-img">
+        
+        <div class="logo-container fade-in">
+            <img src="S__64970771.png" alt="Starshard Brigands Logo" class="logo-full">
+        </div>
+
+        <div class="hero-copy fade-in">
+            <h2 class="text-gradient-gold">星屑の導きか、深淵への誘いか。</h2>
+            <p>忠誠、反逆、そして何者にも与しない自由──選ぶのは、あなた。</p>
+        </div>
+
+        <!-- Hero Actions -->
+        <div class="hero-actions fade-in">
+            <!-- Video Thumbnail -->
+            <div class="video-card-trigger" id="openModalBtn">
+                <img src="S__64970764.png" alt="Trailer Thumbnail" class="video-card-img">
+                <div class="play-overlay">
+                    <div class="play-icon-small"></div>
+                    <div class="play-label">TRAILER</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 15px; text-align: center;">
+                <p style="font-size: 0.85rem; color: #ccc; margin-bottom: 8px;">ウィッシュリストに登録して、体験版の配信通知を受け取ろう</p>
+                <!-- Custom Steam Button -->
+                <a href="https://store.steampowered.com/app/3830970/Starshard_Brigands/" target="_blank" class="custom-steam-btn" style="margin: 0 auto;">
+                    <img src="Steam_2016_logo_white.png" alt="Steam Logo" class="steam-logo-img">
+                    <div class="steam-btn-text">
+                        <span class="steam-btn-sub">Add to your</span>
+                        <span class="steam-btn-main">Wishlist on Steam</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL WINDOW -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-wrapper">
+            <span class="close-btn" id="closeModalBtn">&times;</span>
+            <video id="promoVideo" controls>
+                <source src="trailer.mp4" type="video/mp4">
+                <p style="color:white; padding:20px; text-align:center;">動画ファイルが見つかりません(trailer.mp4)</p>
+            </video>
+        </div>
+    </div>
+
+    <!-- RPG MAKER MZ BADGE -->
+    <div class="engine-badge fade-in">
+        <span>RPGツクールMZ製 3DダンジョンクロウラーRPG</span>
+    </div>
+
+    <!-- STORY SECTION -->
+    <section class="story container stagger-section">
+        <h3 class="text-gradient-gold">Story</h3>
+        <div style="width: 50px; height: 2px; background: var(--gold-primary); margin: 20px auto;"></div>
+        <p>
+            滅びた帝国が遺したのは、地下に眠る広大な迷宮と、<br>
+            そこに封じられた無数の秘宝――そして、それらを巡る終わりなき争い。
+        </p>
+        <p>
+            あなたは名もなき傭兵として、この争いに身を投じる。<br>
+            鍛冶屋で武器を鍛え、酒場で飯を喰らい、ギルドで依頼を請け負う。
+        </p>
+        <p>
+            深淵を暴き、秘宝を掠め、迷宮の主を粉砕する。<br>
+            手にした遺物を派閥へ捧げるか、己の牙とするか。
+        </p>
+        <p>
+            すべてを力に変え、さらなる深淵へ――。
+        </p>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="container">
+        <!-- Feature 1 -->
+        <div class="feature-showcase fade-in-left">
+            <div class="feature-video">
+                <video autoplay muted loop playsinline>
+                    <source src="feature_agency.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="feature-text">
+                <h4 class="gold-title text-gradient-gold">Dynamic Agency</h4>
+                <ul class="feature-list">
+                    <li><strong>遺物の献上</strong>遺物を派閥に捧げて信頼を買うか、秘匿して戦力にするかで物語と報酬が分岐する。</li>
+                    <li><strong>ライバル部隊との遭遇</strong>迷宮内を独自に探索する他パーティーとの接触が、予測不能の展開を引き起こす。</li>
+                    <li><strong>勢力拠点の拡張</strong>特定勢力への貢献度に応じて、強力な専用装備の解禁や拠点の施設アップグレードが行われる。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-showcase row-reverse fade-in-right">
+            <div class="feature-video">
+                <video autoplay muted loop playsinline>
+                    <source src="feature_combat.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="feature-text">
+                <h4 class="gold-title text-gradient-gold">Tactical Command</h4>
+                <ul class="feature-list">
+                    <li><strong>ブレイク＆追撃連携システム</strong>敵の弱点を突いて盾を砕くことで、仲間の追撃が入り、敵の行動を完封して一方的に攻撃できる。</li>
+                    <li><strong>カウンター &amp; パリイ</strong>敵の攻撃に合わせた入力でダメージを無効化し、即座に強力な反撃へと転換する。</li>
+                    <li><strong>探索と強化のハクスラ・サイクル</strong>迷宮で得た素材で装備を作ったり、拠点で強化・鑑定したり――次なる探索をより有利に進めるための戦力へと変換する。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-showcase fade-in-left">
+            <div class="feature-video">
+                <video autoplay muted loop playsinline>
+                    <source src="feature_build.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="feature-text">
+                <h4 class="gold-title text-gradient-gold">Build &amp; Loot</h4>
+                <ul class="feature-list">
+                    <li><strong>自由なキャラクターメイキング</strong>4つの種族、能力値、容姿、得意武器、そして来歴の自由な組み合わせが、職業の枠に縛られない独自の戦術を生む。</li>
+                    <li><strong>広大な星図スキルツリー</strong>非線形なスキル習得ルートの選択により、自分だけのビルドを組み上げる。</li>
+                    <li><strong>ランダムな性能をもつ装備</strong>装備ごとに異なる能力が付与され、同じ名前の武具でも性能が大きく変化する。</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- PARALLAX INTERLUDE -->
+    <div class="parallax-section fade-in">
+        <img src="S__64970762.png" alt="Dungeon Door" class="parallax-bg">
+        <div class="parallax-overlay">
+            <h3 class="text-gradient-gold">さらなる深淵へ</h3>
+            <p style="margin-top:10px; color:#ccc;">迷宮の奥には、まだ誰も手にしていない秘宝が眠っている。</p>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- BOSS BATTLE -->
+    <section class="container fade-in" style="text-align:center; margin-top:100px; margin-bottom:100px;">
+        <div style="position: relative; max-width: 816px; margin: 0 auto;">
+            <video autoplay muted loop playsinline style="width:100%; aspect-ratio: 816 / 624; display: block; margin: 0 auto;">
+                <source src="Deadly_Encounters.mp4" type="video/mp4">
+            </video>
+            <!-- 境界線を完全に消滅させる強力なもやもやオーバーレイ -->
+            <div style="position: absolute; top:0; left:0; width:100%; height:100%; box-sizing: border-box; border: 10px solid var(--bg-color); box-shadow: inset 0 0 100px 40px var(--bg-color); pointer-events: none;"></div>
+        </div>
+    </section>
+
+    <!-- STEAM WIDGET (BOTTOM) -->
+    <section class="container fade-in" style="text-align:center; margin-bottom:100px; padding: 20px 0;">
+        <h3 style="margin-bottom:30px; color: var(--gold-shine); font-size: 1.8rem;">Wishlist on Steam</h3>
+        <iframe src="https://store.steampowered.com/widget/3830970/" frameborder="0" width="646" height="190" style="max-width: 100%;"></iframe>
+    </section>
+
+    <footer>
+        <p>Starshard Brigands Project 2025</p>
+        <a href="https://x.com/Zomia_Studio" target="_blank" class="x-link-btn">
+            𝕏 Follow on X
+        </a>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            });
+            document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .stagger-section').forEach(el => observer.observe(el));
+            
+            // Scroll Progress (Optimized with requestAnimationFrame)
+            const progress = document.getElementById('progressBar');
+            let isScrolling = false;
+
+            window.addEventListener('scroll', () => {
+                if (!isScrolling) {
+                    window.requestAnimationFrame(() => {
+                        const winScroll = window.scrollY;
+                        const height = document.documentElement.scrollHeight - window.innerHeight;
+                        
+                        if (progress) {
+                            const scrolled = (winScroll / height) * 100;
+                            progress.style.width = scrolled + "%";
+                        }
+
+                        isScrolling = false;
+                    });
+                    isScrolling = true;
+                }
+            }, { passive: true });
+
+            // 3D Tilt Effect for Cards
+            const tiltElements = document.querySelectorAll('.feature-showcase, .system-card, .video-card-trigger');
+            tiltElements.forEach(el => {
+                el.addEventListener('mousemove', (e) => {
+                    if (!el.classList.contains('visible') && !el.closest('.visible')) return;
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -5;
+                    const rotateY = ((x - centerX) / centerX) * 5;
+                    
+                    el.style.transition = 'none';
+                    el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    el.style.transition = 'transform 0.5s ease, box-shadow 0.3s ease';
+                    el.style.transform = '';
+                });
+            });
+
+            // Spotlight
+            document.addEventListener('mousemove', e => {
+                const spotlight = document.getElementById('spotlight');
+                if(spotlight) {
+                    spotlight.style.setProperty('--x', e.clientX + 'px');
+                    spotlight.style.setProperty('--y', e.clientY + 'px');
+                }
+            });
+            
+            const modal = document.getElementById('videoModal');
+            const openBtn = document.getElementById('openModalBtn');
+            const closeBtn = document.getElementById('closeModalBtn');
+            const video = document.getElementById('promoVideo');
+            
+            openBtn.addEventListener('click', () => { 
+                modal.classList.add('active'); 
+                video.play();
+            });
+
+            const closeModal = () => { 
+                modal.classList.remove('active'); 
+                video.pause(); 
+                video.currentTime = 0; 
+            };
+
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        });
+    </script>
+    <!-- Particle Animation Script -->
+    <script>
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const particleCount = 60; // 控えめな数で上品に
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.2 + 0.3; // サイズを小さく調整
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * -0.5 - 0.1; // ゆっくり上に昇る
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.y < 0) {
+                    this.y = canvas.height;
+                    this.x = Math.random() * canvas.width;
+                }
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(197, 160, 89, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+    </script>
+</body>
+</html>
